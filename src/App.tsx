@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { db } from "./firebase";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
+import TaskItem from "./TaskItem";
 
 const App: React.FC = () => {
   // cloud firestoreから取得したtasksの内容をReact側でstateとして保持
@@ -19,7 +20,7 @@ const App: React.FC = () => {
   }, []);
 
   const newTask = (e: React.MouseEvent<HTMLButtonElement>) => {
-    db.collection("tasks").add({ title: input });
+    // db.collection("tasks").add({ title: input });
     setInput("");
   };
   return (
@@ -40,9 +41,11 @@ const App: React.FC = () => {
       <button disabled={!input} onClick={newTask}>
         <AddToPhotosIcon />
       </button>
-      {tasks.map((task) => (
-        <h3 key={task.id}>{task.title}</h3>
-      ))}
+      <List>
+        {tasks.map((task) => (
+          <TaskItem key={task.id} id={task.id} title={task.title} />
+        ))}
+      </List>
     </div>
   );
 };
