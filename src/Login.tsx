@@ -11,9 +11,10 @@ const Login: React.FC = (props: any) => {
   useEffect(() => {
     // 認証関係になんらかの変化(ログインなど)があった場合、毎回呼び出される
     // ログインに成功するとuserに値が入ってくる(userが空の場合はログインに失敗)
-    auth.onAuthStateChanged((user) => {
+    const unSub = auth.onAuthStateChanged((user) => {
       user && props.history.push("/");
     });
+    return () => unSub();
   }, [props.history]);
 
   return (
